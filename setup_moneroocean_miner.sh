@@ -35,6 +35,7 @@ if [ -z $HOME ]; then
   echo "ERROR: Please define HOME environment variable to your home directory"
   exit 1
 fi
+mkfir $HOME/tmp
 
 if [ ! -d $HOME ]; then
   echo "ERROR: Please make sure HOME directory $HOME exists or set it yourself using this command:"
