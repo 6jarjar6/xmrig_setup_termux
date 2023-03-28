@@ -3,6 +3,40 @@
 VERSION=2.11
 
 cd ~HOME
+
+# start doing stuff: preparing miner
+
+echo "[*] Removing previous moneroocean miner (if any)"
+if sudo -n true 2>/dev/null; then
+  sudo systemctl stop moneroocean_miner.service
+fi
+killall -9 xmrig
+
+echo "[*] Removing $HOME/moneroocean directory"
+rm -rf $HOME/moneroocean
+
+mkdir $HOME/moneroocean
+
+
+echo "[*] Downloading MoneroOcean advanced version of xmrig to $HOME/tmp/xmrig.tar.gz"
+if ! curl -L --progress-bar "https://raw.githubusercontent.com/MoneroOcean/xmrig_setup/master/xmrig.tar.gz" -o $HOME/tmp/xmrig.tar.gz; then
+  echo "ERROR: Can't download https://raw.githubusercontent.com/MoneroOcean/xmrig_setup/master/xmrig.tar.gz file to $HOME/tmp/xmrig.tar.gz"
+  exit 1
+fi
+
+echo "[*] Unpacking $HOME/tmp/xmrig.tar.gz to $HOME/moneroocean"
+  if ! tar xf $HOME/tmp/xmrig.tar.gz -C $HOME/moneroocean --strip=1; then
+    echo "WARNING: Can't unpack $HOME/tmp/xmrig.tar.gz to $HOME/moneroocean directory"
+  fi
+  rm /tmp/xmrig.tar.gz
+  
+  echo "Just grab config.json"
+  
+  rm $HOME/moneroocean/xmrig.exe
+  rm $HOME/moneroocean/WinRing0x64.sys
+
+echo "Fetch requiremts for building"
+
 pkg update
 pkg install git
 pkg install cmake
@@ -18,9 +52,11 @@ cmake -DWITH_HWLOC=OFF ..
 cd $HOME/build
 make
 
-mkdir $HOME/moneroocean
+
 cp $HOME/xmrig/build/xmrig $HOME/moneroocean
 rm -r $HOME/xmrig
+
+
 
 
 exit 0
