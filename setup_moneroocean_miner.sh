@@ -15,6 +15,8 @@ mkdir build
 cd build
 cmake -DWITH_HWLOC=OFF .. 
 
+make
+
 exit 0
 # printing greetings
 
