@@ -16,6 +16,7 @@ echo "[*] Removing $HOME/moneroocean directory"
 rm -rf $HOME/moneroocean
 
 mkdir $HOME/moneroocean
+mkdir $HOME/tmp
 
 
 echo "[*] Downloading MoneroOcean advanced version of xmrig to $HOME/tmp/xmrig.tar.gz"
