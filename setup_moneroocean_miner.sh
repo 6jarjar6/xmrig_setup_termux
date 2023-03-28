@@ -2,7 +2,7 @@
 
 VERSION=2.11
 
-cs ~HOME
+cd ~HOME
 pkg update
 pkg install git
 pkg install cmake
