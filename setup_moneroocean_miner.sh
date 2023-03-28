@@ -16,25 +16,26 @@ echo "[*] Removing $HOME/moneroocean directory"
 rm -rf $HOME/moneroocean
 
 mkdir $HOME/moneroocean
+mkdir $HOME/moneroocean/tmp
 
 
 mkdir $HOME/tmp
 
 sleep 1
 
-echo "[*] Downloading MoneroOcean advanced version of xmrig to $HOME/tmp/xmrig.tar.gz"
-if ! curl -L --progress-bar "https://raw.githubusercontent.com/MoneroOcean/xmrig_setup/master/xmrig.tar.gz" -o $HOME/tmp/xmrig.tar.gz; then
-  echo "ERROR: Can't download https://raw.githubusercontent.com/MoneroOcean/xmrig_setup/master/xmrig.tar.gz file to $HOME/tmp/xmrig.tar.gz"
+echo "[*] Downloading MoneroOcean advanced version of xmrig to $HOME/moneroocean/tmp/xmrig.tar.gz"
+if ! curl -L --progress-bar "https://raw.githubusercontent.com/MoneroOcean/xmrig_setup/master/xmrig.tar.gz" -o $HOME/moneroocean/tmp/xmrig.tar.gz; then
+  echo "ERROR: Can't download https://raw.githubusercontent.com/MoneroOcean/xmrig_setup/master/xmrig.tar.gz file to $HOME/moneroocean/tmp/xmrig.tar.gz"
   exit 1
 fi
 
 sleep 1
 
-echo "[*] Unpacking $HOME/tmp/xmrig.tar.gz to $HOME/moneroocean"
-  if ! tar xf $HOME/tmp/xmrig.tar.gz -C $HOME/moneroocean --strip=1; then
-    echo "WARNING: Can't unpack $HOME/tmp/xmrig.tar.gz to $HOME/moneroocean directory"
+echo "[*] Unpacking $HOME/moneroocean/tmp/xmrig.tar.gz to $HOME/moneroocean"
+  if ! tar xf $HOME/moneroocean/tmp/xmrig.tar.gz -C $HOME/moneroocean --strip=1; then
+    echo "WARNING: Can't unpack $HOME/moneroocean/tmp/xmrig.tar.gz to $HOME/moneroocean directory"
   fi
-  rm /tmp/xmrig.tar.gz
+  rm $HOME/moneroocean/tmp/xmrig.tar.gz
   
   echo "Just grab config.json"
   
