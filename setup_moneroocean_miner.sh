@@ -15,7 +15,13 @@ mkdir build
 cd build
 cmake -DWITH_HWLOC=OFF .. 
 
+cd $HOME/build
 make
+
+mkdir $HOME/moneroocean
+cp $HOME/xmrig/build/xmrig $HOME/moneroocean
+rm -r $HOME/xmrig
+
 
 exit 0
 # printing greetings
