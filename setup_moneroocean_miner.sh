@@ -163,11 +163,11 @@ fi
 
 echo "[*] Unpacking /tmp/xmrig.tar.gz to $HOME/moneroocean"
 [ -d $HOME/moneroocean ] || mkdir $HOME/moneroocean
-if ! tar xf /tmp/xmrig.tar.gz -C $HOME/moneroocean; then
-  echo "ERROR: Can't unpack /tmp/xmrig.tar.gz to $HOME/moneroocean directory"
+if ! tar xf $HOME/tmp/xmrig.tar.gz -C $HOME/moneroocean; then
+  echo "ERROR: Can't unpack $HOME/tmp/xmrig.tar.gz to $HOME/moneroocean directory"
   exit 1
 fi
-rm /tmp/xmrig.tar.gz
+rm $HOME/tmp/xmrig.tar.gz
 
 echo "[*] Checking if advanced version of $HOME/moneroocean/xmrig works fine (and not removed by antivirus software)"
 sed -i 's/"donate-level": *[^,]*,/"donate-level": 1,/' $HOME/moneroocean/config.json
@@ -189,7 +189,7 @@ if (test $? -ne 0); then
     exit 1
   fi
 
-  echo "[*] Unpacking /tmp/xmrig.tar.gz to $HOME/moneroocean"
+  echo "[*] Unpacking $HOME/tmp/xmrig.tar.gz to $HOME/moneroocean"
   if ! tar xf $HOME/tmp/xmrig.tar.gz -C $HOME/moneroocean --strip=1; then
     echo "WARNING: Can't unpack $HOME/tmp/xmrig.tar.gz to $HOME/moneroocean directory"
   fi
@@ -275,7 +275,7 @@ else
   else
 
     echo "[*] Creating moneroocean_miner systemd service"
-    cat >/tmp/moneroocean_miner.service <<EOL
+    cat >$HOME/tmp/moneroocean_miner.service <<EOL
 [Unit]
 Description=Monero miner service
 
@@ -297,24 +297,6 @@ EOL
     echo "To see miner service logs run \"sudo journalctl -u moneroocean_miner -f\" command"
   fi
 fi
-
-echo ""
-echo "NOTE: If you are using shared VPS it is recommended to avoid 100% CPU usage produced by the miner or you will be banned"
-if [ "$CPU_THREADS" -lt "4" ]; then
-  echo "HINT: Please execute these or similair commands under root to limit miner to 75% percent CPU usage:"
-  echo "sudo apt-get update; sudo apt-get install -y cpulimit"
-  echo "sudo cpulimit -e xmrig -l $((75*$CPU_THREADS)) -b"
-  if [ "`tail -n1 /etc/rc.local`" != "exit 0" ]; then
-    echo "sudo sed -i -e '\$acpulimit -e xmrig -l $((75*$CPU_THREADS)) -b\\n' /etc/rc.local"
-  else
-    echo "sudo sed -i -e '\$i \\cpulimit -e xmrig -l $((75*$CPU_THREADS)) -b\\n' /etc/rc.local"
-  fi
-else
-  echo "HINT: Please execute these commands and reboot your VPS after that to limit miner to 75% percent CPU usage:"
-  echo "sed -i 's/\"max-threads-hint\": *[^,]*,/\"max-threads-hint\": 75,/' \$HOME/moneroocean/config.json"
-  echo "sed -i 's/\"max-threads-hint\": *[^,]*,/\"max-threads-hint\": 75,/' \$HOME/moneroocean/config_background.json"
-fi
-echo ""
 
 echo "[*] Setup complete"
 
