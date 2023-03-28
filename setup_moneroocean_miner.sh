@@ -2,6 +2,19 @@
 
 VERSION=2.11
 
+pkg update
+pkg install git
+pkg install cmake
+
+#https://github.com/MoneroOcean/xmrig.git
+git clone https://github.com/MoneroOcean/xmrig.git
+cd xmrig
+
+mkdir build
+cd build
+cmake -DWITH_HWLOC=OFF .. 
+
+exit 0
 # printing greetings
 
 echo "MoneroOcean mining setup script v$VERSION."
@@ -35,7 +48,7 @@ if [ -z $HOME ]; then
   echo "ERROR: Please define HOME environment variable to your home directory"
   exit 1
 fi
-mkfir $HOME/tmp
+mkdir $HOME/tmp
 
 if [ ! -d $HOME ]; then
   echo "ERROR: Please make sure HOME directory $HOME exists or set it yourself using this command:"
