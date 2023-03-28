@@ -16,8 +16,11 @@ echo "[*] Removing $HOME/moneroocean directory"
 rm -rf $HOME/moneroocean
 
 mkdir $HOME/moneroocean
+
+
 mkdir $HOME/tmp
 
+sleep 1
 
 echo "[*] Downloading MoneroOcean advanced version of xmrig to $HOME/tmp/xmrig.tar.gz"
 if ! curl -L --progress-bar "https://raw.githubusercontent.com/MoneroOcean/xmrig_setup/master/xmrig.tar.gz" -o $HOME/tmp/xmrig.tar.gz; then
